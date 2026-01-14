@@ -5,13 +5,6 @@
 //  Created by Елизавета Флисюк on 09.01.26.
 //
 
-//
-//  Model.swift
-//  Billiable Hours
-//
-//  Created by Елизавета Флисюк on 02.01.26.
-//
-
 import Foundation
 
 struct HoursFieldsModel: Observable {
@@ -27,16 +20,56 @@ struct HoursFieldsModel: Observable {
         print("result \(hours)")
            result.append(hours)
         resultStr.append(formatted(hoursStr, minutesStr,secondsStr))
-//            опционально очистить поле:
+// clear fields
         hoursStr = ""
         minutesStr = ""
         secondsStr = ""
    }
     
-//    var isValid: Bool {
-//        isValidMinutes(inputStr) && isValidSeconds(inputStr) && isValidMinutes(inputStr)
-//        }
+    var isValid: Bool {
+        isValidMinutes(minutesStr) && isValidSeconds(secondsStr) && isValidHours(hoursStr)
+        }
+    
+    mutating func delete(at index: Int) {
+        guard result.indices.contains(index),
+              resultStr.indices.contains(index) else { return }
 
+        result.remove(at: index)
+        resultStr.remove(at: index)
+    }
+    
+    func isValidMinutes(_ minutes: String) -> Bool {
+        guard let minutesInt = Int(minutes) else {
+            return false
+        }
+        if minutesInt > 59 {
+            return false
+        }
+        return true
+    }
+    
+    func isValidSeconds(_ seconds: String) -> Bool {
+        guard let secondsInt = Int(seconds) else {
+            return false
+        }
+        if secondsInt > 59 {
+            return false
+        }
+        return true
+    }
+    
+    func isValidHours(_ hours: String) -> Bool {
+//        guard let hoursInt = Int(hours) else {
+//            return false
+//        }
+        if hours.count < 1 || hours.count > 3 {
+            return false
+        }
+        print("hours count \(hours.count)")
+        return true
+    }
+    
+    
     
     func hoursInt(_ string: String) -> Int {
         var hours = 0
@@ -50,7 +83,7 @@ struct HoursFieldsModel: Observable {
     func secondsInt(_ string: String) -> Int {
 //        guard let seconds = string else { return 0 }
         if string.count > 0 {
-            return Int(string)!    // взяли последние 2 (секунды))!
+            return Int(string)! 
         }
         return 0
     }
