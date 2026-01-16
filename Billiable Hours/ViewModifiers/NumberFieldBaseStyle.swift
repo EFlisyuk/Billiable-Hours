@@ -12,7 +12,7 @@ struct NumberFieldBaseStyle: ViewModifier {
         content
                     .multilineTextAlignment(.center)
                     .padding(.vertical, 4)
-                    .padding(.horizontal, 12)
+                    .padding(.horizontal, 4)
                     .background(
                         RoundedRectangle(cornerRadius: 8)
                             .fill(Color.white)

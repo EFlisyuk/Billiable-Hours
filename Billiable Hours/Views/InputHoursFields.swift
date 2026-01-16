@@ -13,14 +13,18 @@ struct InputHoursFields: View {
     var body: some View {
         VStack (spacing: 0) {
             Form {
-                Section(header: Text("Duration (hh:mm:ss)")) {
-                    HStack(spacing: 20) {
+                Section {
+                    HStack(spacing: 10) {
                         TextField ("00", text: $vmh.hoursStr)
                             .numberFieldBaseStyle()
                             .foregroundStyle(vmh.isValidHours(vmh.hoursStr) ? .blue : .red)
+                        Text(":")
+                            .foregroundStyle(.secondary)
                         TextField ("00", text: $vmh.minutesStr)
                             .numberFieldBaseStyle()
                             .foregroundStyle(vmh.isValidMinutes(vmh.minutesStr) ? .blue : .red)
+                        Text(":")
+                            .foregroundStyle(.secondary)
                         TextField ("00", text: $vmh.secondsStr)
                             .numberFieldBaseStyle()
                             .foregroundStyle(vmh.isValidSeconds(vmh.secondsStr) ? .blue : .red)
@@ -29,10 +33,13 @@ struct InputHoursFields: View {
                         {
                             vmh.submit()
                         }
-                        .labelStyle(.iconOnly)
+                        .labelStyle(.titleAndIcon)
+                        .fixedSize(horizontal: true, vertical: false)
+                        .buttonStyle(.borderless)
                         .disabled(!vmh.isValid)
-                        .padding(.vertical, 4)
-                        .padding(.horizontal, 8)
+                        .opacity(vmh.isValid ? 1 : 0.35) 
+                        .padding(.vertical, 5)
+                        .padding(.horizontal, 12)
                         .background(.blue)
                         .foregroundColor(.white)
                         .cornerRadius(12)
@@ -43,6 +50,10 @@ struct InputHoursFields: View {
 //                            .font(.footnote)
 //                    }
 //                    .listRowBackground(Color.clear)
+                }
+                header: {
+                    Text("Duration (hh:mm:ss)")
+                        .padding(.horizontal, 20)
                 }
                 .listRowInsets(EdgeInsets())
             }

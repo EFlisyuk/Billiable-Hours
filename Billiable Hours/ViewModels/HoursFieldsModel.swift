@@ -59,9 +59,9 @@ struct HoursFieldsModel: Observable {
     }
     
     func isValidHours(_ hours: String) -> Bool {
-//        guard let hoursInt = Int(hours) else {
-//            return false
-//        }
+        guard let hoursInt = Int(hours) else {
+            return false
+        }
         if hours.count < 1 || hours.count > 3 {
             return false
         }
