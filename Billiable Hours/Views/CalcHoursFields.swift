@@ -6,84 +6,101 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct CalcHoursFields: View {
-    @Binding var vmh: HoursFieldsModel
-    @State private var showConfirmationDialog = false
-    @State private var deleteIndex: Int? = nil
+    @Environment(\.modelContext) private var context
+    @Query(sort: \HoursFieldsModel.date) var calculations: [HoursFieldsModel]
+    @State private var showCopied = false
     
     var body: some View {
         VStack {
-            List {
-                Section(header: Text("Hours")) {
-                    ForEach($vmh.result.indices, id: \.self) { i in
-                        HStack{
-                            HStack{
-                                Image(systemName: "clock")
-                                Text("\(vmh.resultStr[i])")
+            if calculations.isEmpty {
+                ContentUnavailableView("No Calculations", systemImage: "numbers.rectangle")
+                    .opacity(0.2)
+            } else {
+                
+                List {
+                    Section(header: Text("Hours")) {
+                        ForEach(calculations) { result in
+                            HStack {
+                                HStack {
+                                    Image(systemName: "clock")
+                                    Text("\(result.resultString)")
+                                }
+                                .foregroundStyle(.secondary)
+                                
+                                Spacer()
+                                
+                                HStack {
+                                    Image(systemName: "h.circle")
+                                    Text("\(result.resultDigit, specifier: "%.3f")")
+                                    CopyButton(result: result, showCopied: $showCopied)
+                                }
+                                .foregroundStyle(.green)
                             }
-                            .foregroundStyle(.secondary)
-                            Spacer()
-                            HStack{
-                                Text("\(vmh.result[i], specifier: "%.3f")")
-                                Image(systemName: "h.circle")
-                            }
-                            .foregroundStyle(.green)
                         }
-                        .swipeActions {
-                            Button(role: .destructive) {
-                                deleteIndex = i
-                                showConfirmationDialog = true
-                            } label: {
-                                Label("Delete", systemImage: "trash")
-                            }
-                        }
+                        .onDelete(perform: deleteCalc(indexes:))
                     }
                 }
-            }
-            .listSectionSpacing(0)
-            .listRowInsets(EdgeInsets())
-            .confirmationDialog("Are you sure you want to delete this comment?", isPresented: $showConfirmationDialog, titleVisibility: .visible) {
-                Button("Delete", role: .destructive) {
-                    if let idx = deleteIndex {
-                        vmh.delete(at: idx)
+                .overlay(alignment: .top) {   // ✅ overlay НА List/контейнер, не внутри Button
+                    if showCopied {
+                        copiedBadge
                     }
-                    deleteIndex = nil
                 }
-                Button("Cancel", role: .cancel) {
-                    deleteIndex = nil
-                }
-            }
-            HStack{
-                Button(role: .destructive) {
-                    vmh.result = []
-                    vmh.resultStr = []
-                } label: {
-                    Label("Clean list", systemImage: "trash")
-                        .frame(maxWidth: .infinity)        // ← на всю ширину
-                        .padding(.vertical, 14)            // ← большая высота
-                        .contentShape(Rectangle())         // ← вся площадь кликабельна
-                }
-                .buttonStyle(.borderless)
-                .background(vmh.result.isEmpty ? Color.gray.opacity(0.3) : Color.red)
-                .foregroundColor(.white)
-                .cornerRadius(16)
-                .padding(.horizontal)
-                .disabled(vmh.result.isEmpty)
+                .animation(.easeInOut, value: showCopied)
             }
         }
         .background(Color(.systemGroupedBackground))
+        
+        HStack {
+            Button(role: .destructive) {
+                for row in calculations {
+                    context.delete(row)
+                    do {
+                        try context.save()
+                    }
+                    catch {
+                        print("Ошибка при очистке базы: \(error)")
+                    }
+                }
+            } label: {
+                Label("Clean list", systemImage: "trash")
+                    .frame(maxWidth: .infinity)        // ← на всю ширину
+                    .padding(.vertical, 14)            // ← большая высота
+                    .contentShape(Rectangle())         // ← вся площадь кликабельна
+            }
+            .buttonStyle(.borderless)
+            .background(calculations.isEmpty ? Color.gray.opacity(0.3) : Color.red)
+            .foregroundColor(.white)
+            .cornerRadius(16)
+            .padding(.horizontal)
+            .disabled(calculations.isEmpty)
+            .padding([.bottom, .top], 16)
+        }
+        .background(Color(.systemGroupedBackground))
+    }
+    
+    func deleteCalc(indexes: IndexSet) {
+        for index in indexes {
+            let calcToDelete = calculations[index]
+            context.delete(calcToDelete)
+        }
+    }
+    
+    private var copiedBadge: some View {
+        Text("Copied")
+            .font(.subheadline)
+            .padding(.vertical, 8)
+            .padding(.horizontal, 12)
+            .background(.white)
+            .clipShape(Capsule())
+            .padding(.top, 12)
+            .transition(.move(edge: .top).combined(with: .opacity))
     }
 }
 
 #Preview {
-    PreviewWrapper()
-}
-
-private struct PreviewWrapper: View {
-    @State private var vmh = HoursFieldsModel()
-
-    var body: some View {
-        CalcHoursFields(vmh: $vmh)
-    }
+    CalcHoursFields()
+        .modelContainer(for: HoursFieldsModel.self, inMemory: true)
 }

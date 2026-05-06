@@ -10,14 +10,14 @@ import SwiftUI
 struct NumberFieldBaseStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
-                    .multilineTextAlignment(.center)
-                    .padding(.vertical, 4)
-                    .padding(.horizontal, 4)
-                    .background(
-                        RoundedRectangle(cornerRadius: 8)
-                            .fill(Color.white)
-                    )
-                    .keyboardType(.numberPad)
+            .multilineTextAlignment(.center)
+            .padding(.vertical, 4)
+            .padding(.horizontal, 4)
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.white)
+            )
+            .keyboardType(.numberPad)
     }
 }
 

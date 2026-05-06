@@ -6,27 +6,26 @@
 //
 
 import SwiftUI
-
+import SwiftData
 
 
 struct ContentView: View {
-    @State private var vmh = HoursFieldsModel()
     
     var body: some View {
-        NavigationView {
-            VStack(spacing: 0) {
-                VStack(spacing: 0)  {
-                    InputHoursFields(vmh: $vmh)
-                        .frame(height: 100)
-                    CalcHoursFields(vmh: $vmh)
-                }
+        TabView {
+            Tab("Calculate", systemImage: "numbers.rectangle") {
+                CalculateView()
             }
-            .navigationTitle("Worked Time")
-            .padding(0)
+            
+            Tab("Lists", systemImage: "list.star") {
+                ContentUnavailableView("Saved Lists", systemImage: "list.star")
+                    .opacity(0.2)
+            }
         }
     }
 }
 
 #Preview {
     ContentView()
+        .modelContainer(for: HoursFieldsModel.self, inMemory: true)
 }
