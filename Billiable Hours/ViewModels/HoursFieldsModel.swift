@@ -6,38 +6,39 @@
 //
 
 import Foundation
+import SwiftData
 
-struct HoursFieldsModel: Observable {
-    var hoursStr: String = ""
-    var minutesStr: String = ""
-    var secondsStr: String = ""
-    var result: [Double] = []
-    var resultStr: [String] = []
-    
-    mutating func submit() {
-//       guard isValid else { return }
-        let hours = calculateHours(hoursStr, minutesStr,secondsStr)
-        print("result \(hours)")
-           result.append(hours)
-        resultStr.append(formatted(hoursStr, minutesStr,secondsStr))
-// clear fields
-        hoursStr = ""
-        minutesStr = ""
-        secondsStr = ""
-   }
-    
+@Model
+class HoursFieldsModel {
+    var hoursStr: String
+    var minutesStr: String
+    var secondsStr: String
+    var resultDigit: Double
+    var resultString: String
+    var date: Date = Date()
+
+    init(hoursStr: String = "", minutesStr: String = "", secondsStr: String = "", resultDigit: Double = 0, resultString: String = "", date: Date = .now) {
+        self.hoursStr = hoursStr
+        self.minutesStr = minutesStr
+        self.secondsStr = secondsStr
+        self.resultDigit = resultDigit
+        self.resultString = resultString
+        self.date = date
+    }
+
+    func submit() {
+        //       guard isValid else { return }
+        let hours = calculateHours(hoursStr, minutesStr, secondsStr)
+        print("resultDigit \(hours)")
+        resultDigit = hours
+        resultString = formatted(hoursStr, minutesStr, secondsStr)
+    }
+
     var isValid: Bool {
         isValidMinutes(minutesStr) && isValidSeconds(secondsStr) && isValidHours(hoursStr)
-        }
-    
-    mutating func delete(at index: Int) {
-        guard result.indices.contains(index),
-              resultStr.indices.contains(index) else { return }
-
-        result.remove(at: index)
-        resultStr.remove(at: index)
     }
-    
+
+
     func isValidMinutes(_ minutes: String) -> Bool {
         guard let minutesInt = Int(minutes) else {
             return false
@@ -47,7 +48,7 @@ struct HoursFieldsModel: Observable {
         }
         return true
     }
-    
+
     func isValidSeconds(_ seconds: String) -> Bool {
         guard let secondsInt = Int(seconds) else {
             return false
@@ -57,20 +58,18 @@ struct HoursFieldsModel: Observable {
         }
         return true
     }
-    
+
     func isValidHours(_ hours: String) -> Bool {
-//        guard let hoursInt = Int(hours) else {
-//            return false
-//        }
-        if hours.count < 1 || hours.count > 3 {
+        guard let hoursInt = Int(hours) else {
+            return false
+        }
+        if hoursInt > 999 {
             return false
         }
         print("hours count \(hours.count)")
         return true
     }
-    
-    
-    
+
     func hoursInt(_ string: String) -> Int {
         var hours = 0
         if string.count > 0 {
@@ -79,22 +78,21 @@ struct HoursFieldsModel: Observable {
         }
         return hours
     }
-    
+
     func secondsInt(_ string: String) -> Int {
-//        guard let seconds = string else { return 0 }
         if string.count > 0 {
-            return Int(string)! 
+            return Int(string)!
         }
         return 0
     }
-    
+
     func minutesInt (_ string: String) -> Int {
         if string.count > 0 {
             return Int(string)!
         }
         return 0
     }
-    
+
     func formatted(_ hours: String, _ minutes: String, _ seconds: String) -> String {
         var formattedStr: [String] = []
         formattedStr.append(hours)
@@ -104,10 +102,9 @@ struct HoursFieldsModel: Observable {
         formattedStr.append(seconds)
         let stringResult = String(formattedStr.joined())
         print(stringResult)
-        
+
         return stringResult
     }
-    
 
     func calculateHours (_ hours: String, _ minutes: String, _ seconds: String) -> Double {
         let hours = hoursInt(hours)
@@ -115,7 +112,6 @@ struct HoursFieldsModel: Observable {
         let seconds = secondsInt(seconds)
         return Double(hours) + Double(minutes) / 60 + Double(seconds) / 3600
     }
-    
 }
 
 
