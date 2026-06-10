@@ -13,7 +13,7 @@ struct CalcButton: View {
     @Environment(\.modelContext) private var context
     
     var body: some View {
-        Button("Calc", systemImage: "arrow.right.circle")
+        Button("Calc", systemImage: "arrow.right")
         {
             let newCalculation = HoursFieldsModel(
                 hoursStr: vmh.hoursStr,
@@ -29,8 +29,6 @@ struct CalcButton: View {
             
             do {
                 try context.save()
-                print("Часы \(newCalculation.hoursStr)")
-                print("Резалт \(newCalculation.resultDigit)")
             } catch {
                 print("Ошибка сохранения: \(error.localizedDescription)")
             }
@@ -40,13 +38,13 @@ struct CalcButton: View {
             vmh.minutesStr = ""
             vmh.secondsStr = ""
         }
-        .labelStyle(.titleAndIcon)
+        .labelStyle(.iconOnly)
         .fixedSize(horizontal: true, vertical: false)
         .buttonStyle(.borderless)
         .disabled(!vmh.isValid)
         .opacity(vmh.isValid ? 1 : 0.35)
-        .padding(.vertical, 5)
-        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+        .padding(.horizontal, 28)
         .background(.blue)
         .foregroundColor(.white)
         .cornerRadius(12)
@@ -56,5 +54,5 @@ struct CalcButton: View {
 #Preview {
     @Previewable @State var vmh = HoursFieldsModel()
     CalcButton(vmh: vmh)
-        .modelContainer(for: HoursFieldsModel.self, inMemory: true)
+        .modelContainer(for: [HoursFieldsModel.self, HoursList.self], inMemory: true)
 }

@@ -15,7 +15,7 @@ struct NumberFieldBaseStyle: ViewModifier {
             .padding(.horizontal, 4)
             .background(
                 RoundedRectangle(cornerRadius: 8)
-                    .fill(Color.white)
+                    .fill(Color(.secondarySystemGroupedBackground))
             )
             .keyboardType(.numberPad)
     }

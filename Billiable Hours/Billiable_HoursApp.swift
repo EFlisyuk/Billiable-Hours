@@ -13,7 +13,7 @@ struct Billiable_HoursApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .modelContainer(for: HoursFieldsModel.self)
+                .modelContainer(for: [HoursFieldsModel.self, HoursList.self])
         }
 
     }

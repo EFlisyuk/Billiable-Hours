@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct CopyButton: View {
-    @Bindable var result: HoursFieldsModel
+    let result: Double
     @Binding var showCopied: Bool
     
     var body: some View {
         Button {
-            UIPasteboard.general.string = String(format: "%.3f", result.resultDigit)
+            UIPasteboard.general.string = String(format: "%.3f", result)
             showCopied = true
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 showCopied = false}
@@ -27,9 +27,9 @@ struct CopyButton: View {
 }
 
 #Preview {
-    @Previewable @State var result = HoursFieldsModel()
+    @Previewable @State var result: Double = 0
     @Previewable @State var showCopied: Bool = false
     CopyButton(result: result, showCopied: $showCopied)
-        .modelContainer(for: HoursFieldsModel.self, inMemory: true)
+        .modelContainer(for: [HoursFieldsModel.self, HoursList.self], inMemory: true)
 }
 
