@@ -18,8 +18,9 @@ struct ContentView: View {
             }
             
             Tab("Lists", systemImage: "list.star") {
-                ContentUnavailableView("Saved Lists", systemImage: "list.star")
-                    .opacity(0.2)
+                NavigationStack {
+                    ListsView()
+                }
             }
         }
     }
@@ -27,5 +28,11 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .modelContainer(for: HoursFieldsModel.self, inMemory: true)
+        .modelContainer(for: [HoursFieldsModel.self, HoursList.self], inMemory: true)
+}
+
+#Preview("Dark") {
+    ContentView()
+        .modelContainer(for: [HoursFieldsModel.self, HoursList.self], inMemory: true)
+        .preferredColorScheme(.dark)
 }

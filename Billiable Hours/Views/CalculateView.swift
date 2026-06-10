@@ -17,6 +17,8 @@ struct CalculateView: View {
                 VStack(spacing: 0) {
                     InputHoursFields(vmh: vmh)
                         .frame(height: 100)
+                        .scrollDisabled(true) // 1. Запрещаем форме скроллиться внутри себя
+                    //                            .fixedSize(horizontal: false, vertical: true) // 2. Магия! Говорит форме: "Займи по вертикали только свой идеальный размер"
                     CalcHoursFields()
                 }
             }
@@ -28,5 +30,5 @@ struct CalculateView: View {
 
 #Preview {
     CalculateView()
-        .modelContainer(for: HoursFieldsModel.self, inMemory: true)
+        .modelContainer(for: [HoursFieldsModel.self, HoursList.self], inMemory: true)
 }

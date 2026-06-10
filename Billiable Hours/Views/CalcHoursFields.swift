@@ -12,6 +12,7 @@ struct CalcHoursFields: View {
     @Environment(\.modelContext) private var context
     @Query(sort: \HoursFieldsModel.date) var calculations: [HoursFieldsModel]
     @State private var showCopied = false
+    @State private var showModal = false
     
     var body: some View {
         VStack {
@@ -35,7 +36,7 @@ struct CalcHoursFields: View {
                                 HStack {
                                     Image(systemName: "h.circle")
                                     Text("\(result.resultDigit, specifier: "%.3f")")
-                                    CopyButton(result: result, showCopied: $showCopied)
+                                    CopyButton(result: result.resultDigit, showCopied: $showCopied)
                                 }
                                 .foregroundStyle(.green)
                             }
@@ -53,7 +54,7 @@ struct CalcHoursFields: View {
         }
         .background(Color(.systemGroupedBackground))
         
-        HStack {
+        HStack (spacing: 16) {
             Button(role: .destructive) {
                 for row in calculations {
                     context.delete(row)
@@ -73,12 +74,30 @@ struct CalcHoursFields: View {
             .buttonStyle(.borderless)
             .background(calculations.isEmpty ? Color.gray.opacity(0.3) : Color.red)
             .foregroundColor(.white)
-            .cornerRadius(16)
-            .padding(.horizontal)
+            .cornerRadius(36)
             .disabled(calculations.isEmpty)
-            .padding([.bottom, .top], 16)
+            Button {
+                showModal = true
+            } label: {
+                Label("Save list", systemImage: "plus.square")
+                    .frame(maxWidth: .infinity)        // ← на всю ширину
+                    .padding(.vertical, 14)            // ← большая высота
+                    .contentShape(Rectangle())         // ← вся площадь кликабельна
+            }
+            .buttonStyle(.borderless)
+            .background(calculations.isEmpty ? Color.gray.opacity(0.3) : Color.green)
+            .foregroundColor(.white)
+            .cornerRadius(36)
+            .disabled(calculations.isEmpty)
         }
+        .padding()
+        .padding(.bottom, 16)
         .background(Color(.systemGroupedBackground))
+        .sheet(isPresented: $showModal) {
+            NavigationStack {
+                NewListView()
+            }
+        }
     }
     
     func deleteCalc(indexes: IndexSet) {
@@ -102,5 +121,5 @@ struct CalcHoursFields: View {
 
 #Preview {
     CalcHoursFields()
-        .modelContainer(for: HoursFieldsModel.self, inMemory: true)
+        .modelContainer(for: [HoursFieldsModel.self, HoursList.self], inMemory: true)
 }
