@@ -14,6 +14,7 @@ struct NewListView: View {
 
     @Query(sort: \HoursFieldsModel.date) var calculations: [HoursFieldsModel]
     @State private var newHoursListName: String = "New List Name"
+    var hourlyRate: String
 
     var body: some View {
         Form {
@@ -21,6 +22,23 @@ struct NewListView: View {
                 .textSelectionAffinity(.upstream)
 
             Section("Hours List") {
+                HStack {
+                    Text("Hourly Rate: ")
+                    Spacer()
+                    Text("\(hourlyRate)")
+//                    TextField("Hourly Rate", text: $hourlyRate)
+//                        .multilineTextAlignment(.trailing)
+//                        .foregroundStyle(.blue)
+                }
+
+                HStack {
+                    Image(systemName: "clock")
+                    Text("\(sumDurations)")
+                    Spacer()
+                    Image(systemName: "h.circle")
+                    Text("\(sumHours)")
+                }
+
                 ForEach(calculations) { result in
                     HStack {
                         HStack {
@@ -53,7 +71,7 @@ struct NewListView: View {
                     }
 
                     // 2. Создаем архивный список с этими данными
-                    let newList = HoursList(name: newHoursListName, listResults: simpleItems, date: .now)
+                    let newList = HoursList(name: newHoursListName, sumHours: sumHours, sumDurations: sumDurations, hourlyRate: hourlyRate, listResults: simpleItems, date: .now)
                     context.insert(newList)
 
                     // 3. Теперь удаляем оригиналы.
@@ -78,9 +96,24 @@ struct NewListView: View {
             }
         }
     }
+
+    private var sumHours: Double {
+        calculations.reduce(0) {$0 + $1.resultDigit}
+    }
+
+    private var sumDurations: String {
+        let sumResultDigit = calculations.reduce(0) { $0 + $1.resultDigit }
+
+            let h = Int(sumResultDigit)
+            let m = Int((sumResultDigit * 60).truncatingRemainder(dividingBy: 60))
+            let s = Int((sumResultDigit * 3600).truncatingRemainder(dividingBy: 60))
+
+            return String(format: "%d:%02d:%02d", h, m, s)
+    }
 }
 
 #Preview {
-    NewListView()
+    @Previewable @State var hourlyRate: String = "0.0"
+    NewListView(hourlyRate: hourlyRate)
         .modelContainer(for: [HoursFieldsModel.self, HoursList.self], inMemory: true)
 }
