@@ -21,11 +21,10 @@ struct ListsView: View {
                 ForEach(hoursList) { row in
                     NavigationLink("\(row.name)", destination: ListDetail(calculations: row))
                 }
+
             }
             .navigationTitle("Lists")
-            .scrollContentBackground(.hidden)
-            .background(Color(.systemGroupedBackground))
-            .padding(.top, 32)
+            .contentMargins(.top, 8)
         }
     }
 }

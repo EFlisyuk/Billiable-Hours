@@ -11,11 +11,17 @@ import SwiftData
 @Model
 class HoursList {
     var name: String
+    var sumHours: Double
+    var sumDurations: String
+    var hourlyRate: String
     var listResults: [ArchivedCalculation]
     var date: Date
     
-    init(name: String, listResults: [ArchivedCalculation], date: Date = .now) {
+    init(name: String, sumHours: Double, sumDurations: String, hourlyRate: String, listResults: [ArchivedCalculation], date: Date = .now) {
         self.name = name
+        self.sumHours = sumHours
+        self.sumDurations = sumDurations
+        self.hourlyRate = hourlyRate
         self.listResults = listResults
         self.date = date
     }

@@ -18,11 +18,15 @@ struct CalculateView: View {
                     InputHoursFields(vmh: vmh)
                         .frame(height: 100)
                         .scrollDisabled(true) // 1. Запрещаем форме скроллиться внутри себя
+                        
                     //                            .fixedSize(horizontal: false, vertical: true) // 2. Магия! Говорит форме: "Займи по вертикали только свой идеальный размер"
+                   
                     CalcHoursFields()
+
                 }
             }
             .navigationTitle("Worked Time")
+            .contentMargins(.top, 8)
             .padding(0)
         }
     }

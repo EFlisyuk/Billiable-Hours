@@ -13,7 +13,7 @@ struct CopyButton: View {
     
     var body: some View {
         Button {
-            UIPasteboard.general.string = String(format: "%.3f", result)
+            UIPasteboard.general.string = String(format: "%.3f", locale: Locale.current, result)
             showCopied = true
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 showCopied = false}
