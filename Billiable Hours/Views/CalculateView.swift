@@ -36,3 +36,8 @@ struct CalculateView: View {
     CalculateView()
         .modelContainer(for: [HoursFieldsModel.self, HoursList.self], inMemory: true)
 }
+
+#Preview("Test Data") {
+    CalculateView()
+        .modelContainer(previewContainer())
+}

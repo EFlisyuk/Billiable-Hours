@@ -206,3 +206,8 @@ struct CalcHoursFields: View {
 }
 
 
+#Preview("Test Data") {
+    CalcHoursFields()
+        .modelContainer(previewContainer())
+}
+
