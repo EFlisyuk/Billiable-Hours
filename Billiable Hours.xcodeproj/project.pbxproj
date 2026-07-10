@@ -6,19 +6,55 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		799E67A93001404E00EB3530 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 79BE5B212E79815C00F183F7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 79BE5B282E79815C00F183F7;
+			remoteInfo = "Billiable Hours";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		799E67A53001404E00EB3530 /* Billiable HoursTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Billiable HoursTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		79BE5B292E79815C00F183F7 /* Billiable Hours.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Billiable Hours.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		799E67AF3001430B00EB3530 /* Exceptions for "Billiable Hours" folder in "Billiable HoursTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				ViewModels/HoursFieldsModel.swift,
+			);
+			target = 799E67A43001404E00EB3530 /* Billiable HoursTests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		799E67A63001404E00EB3530 /* Billiable HoursTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Billiable HoursTests";
+			sourceTree = "<group>";
+		};
 		79BE5B2B2E79815C00F183F7 /* Billiable Hours */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				799E67AF3001430B00EB3530 /* Exceptions for "Billiable Hours" folder in "Billiable HoursTests" target */,
+			);
 			path = "Billiable Hours";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		799E67A23001404E00EB3530 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		79BE5B262E79815C00F183F7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -33,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				79BE5B2B2E79815C00F183F7 /* Billiable Hours */,
+				799E67A63001404E00EB3530 /* Billiable HoursTests */,
 				79BE5B2A2E79815C00F183F7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				79BE5B292E79815C00F183F7 /* Billiable Hours.app */,
+				799E67A53001404E00EB3530 /* Billiable HoursTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,6 +86,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		799E67A43001404E00EB3530 /* Billiable HoursTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 799E67AB3001404E00EB3530 /* Build configuration list for PBXNativeTarget "Billiable HoursTests" */;
+			buildPhases = (
+				799E67A13001404E00EB3530 /* Sources */,
+				799E67A23001404E00EB3530 /* Frameworks */,
+				799E67A33001404E00EB3530 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				799E67AA3001404E00EB3530 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				799E67A63001404E00EB3530 /* Billiable HoursTests */,
+			);
+			name = "Billiable HoursTests";
+			packageProductDependencies = (
+			);
+			productName = "Billiable HoursTests";
+			productReference = 799E67A53001404E00EB3530 /* Billiable HoursTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		79BE5B282E79815C00F183F7 /* Billiable Hours */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 79BE5B342E79815E00F183F7 /* Build configuration list for PBXNativeTarget "Billiable Hours" */;
@@ -77,9 +138,13 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1630;
+				LastSwiftUpdateCheck = 2650;
 				LastUpgradeCheck = 2650;
 				TargetAttributes = {
+					799E67A43001404E00EB3530 = {
+						CreatedOnToolsVersion = 26.5;
+						TestTargetID = 79BE5B282E79815C00F183F7;
+					};
 					79BE5B282E79815C00F183F7 = {
 						CreatedOnToolsVersion = 16.3;
 					};
@@ -101,11 +166,19 @@
 			projectRoot = "";
 			targets = (
 				79BE5B282E79815C00F183F7 /* Billiable Hours */,
+				799E67A43001404E00EB3530 /* Billiable HoursTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		799E67A33001404E00EB3530 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		79BE5B272E79815C00F183F7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -116,6 +189,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		799E67A13001404E00EB3530 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		79BE5B252E79815C00F183F7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -125,7 +205,57 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		799E67AA3001404E00EB3530 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 79BE5B282E79815C00F183F7 /* Billiable Hours */;
+			targetProxy = 799E67A93001404E00EB3530 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		799E67AC3001404E00EB3530 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fliza.Billiable-HoursTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Billiable Hours.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Billiable Hours";
+			};
+			name = Debug;
+		};
+		799E67AD3001404E00EB3530 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fliza.Billiable-HoursTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Billiable Hours.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Billiable Hours";
+			};
+			name = Release;
+		};
 		79BE5B322E79815E00F183F7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -308,6 +438,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		799E67AB3001404E00EB3530 /* Build configuration list for PBXNativeTarget "Billiable HoursTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				799E67AC3001404E00EB3530 /* Debug */,
+				799E67AD3001404E00EB3530 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		79BE5B242E79815C00F183F7 /* Build configuration list for PBXProject "Billiable Hours" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
