@@ -42,7 +42,6 @@ struct CalcHoursFields: View {
                     }
                 }
                 .background(Color(.systemGroupedBackground))
-
             }
         }
 
@@ -80,7 +79,7 @@ struct CalcHoursFields: View {
             }
             .onDelete(perform: deleteCalc(indexes:))
         }
-        .overlay(alignment: .top) {   // ✅ overlay НА List/контейнер, не внутри Button
+        .overlay(alignment: .top) {
             if showCopied {
                 copiedBadge
             }
@@ -134,14 +133,14 @@ struct CalcHoursFields: View {
                         try context.save()
                     }
                     catch {
-                        print("Ошибка при очистке базы: \(error)")
+                        print("Clean list error: \(error)")
                     }
                 }
             } label: {
                 Label("Clean list", systemImage: "trash")
-                    .frame(maxWidth: .infinity)        // ← на всю ширину
-                    .padding(.vertical, 14)            // ← большая высота
-                    .contentShape(Rectangle())         // ← вся площадь кликабельна
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 14)
+                    .contentShape(Rectangle())
             }
             .buttonsListControlStyle(isEmpty: calculations.isEmpty , color: .red)
 
@@ -149,9 +148,9 @@ struct CalcHoursFields: View {
                 showModal = true
             } label: {
                 Label("Save list", systemImage: "plus.square")
-                    .frame(maxWidth: .infinity)        // ← на всю ширину
-                    .padding(.vertical, 14)            // ← большая высота
-                    .contentShape(Rectangle())         // ← вся площадь кликабельна
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 14)
+                    .contentShape(Rectangle())
             }
             .buttonsListControlStyle(isEmpty: calculations.isEmpty , color: .green)
         }
@@ -164,7 +163,6 @@ struct CalcHoursFields: View {
             }
         }
     }
-
 
     func deleteCalc(indexes: IndexSet) {
         for index in indexes {
@@ -197,14 +195,12 @@ struct CalcHoursFields: View {
 
         return String(format: "%d:%02d:%02d", h, m, s)
     }
-
 }
 
 #Preview {
     CalcHoursFields()
         .modelContainer(for: [HoursFieldsModel.self, HoursList.self], inMemory: true)
 }
-
 
 #Preview("Test Data") {
     CalcHoursFields()

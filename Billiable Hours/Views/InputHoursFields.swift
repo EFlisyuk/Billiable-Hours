@@ -43,11 +43,6 @@ struct InputHoursFields: View {
                     }
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
-                    //                    HStack {
-                    //                        Text("Validation \(vmh.isValid)")
-                    //                            .font(.footnote)
-                    //                    }
-                    //                    .listRowBackground(Color.clear)
                 }
                 header: {
                     Text("Duration (hh:mm:ss)")

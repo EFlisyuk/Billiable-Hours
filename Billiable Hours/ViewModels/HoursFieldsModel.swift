@@ -27,9 +27,7 @@ class HoursFieldsModel {
     }
 
     func submit() {
-        //       guard isValid else { return }
         let hours = calculateHours(hoursStr, minutesStr, secondsStr)
-        print("resultDigit \(hours)")
         resultDigit = hours
         resultString = formatted(hoursStr, minutesStr, secondsStr)
     }
@@ -66,7 +64,6 @@ class HoursFieldsModel {
         if hoursInt > 999 {
             return false
         }
-        print("hours count \(hours.count)")
         return true
     }
 
@@ -101,7 +98,6 @@ class HoursFieldsModel {
         formattedStr.append(":")
         formattedStr.append(seconds)
         let stringResult = String(formattedStr.joined())
-        print(stringResult)
 
         return stringResult
     }

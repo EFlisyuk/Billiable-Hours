@@ -15,6 +15,5 @@ struct Billiable_HoursApp: App {
             ContentView()
                 .modelContainer(for: [HoursFieldsModel.self, HoursList.self])
         }
-
     }
 }

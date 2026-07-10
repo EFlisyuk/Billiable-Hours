@@ -15,25 +15,25 @@ struct CalcButton: View {
     var body: some View {
         Button("Calc", systemImage: "arrow.right")
         {
+            // create new object
             let newCalculation = HoursFieldsModel(
                 hoursStr: vmh.hoursStr,
                 minutesStr: vmh.minutesStr,
                 secondsStr: vmh.secondsStr
             )
             
-            // 2. Считаем результат для этого нового объекта
+            // results for new object
             newCalculation.submit()
             
-            // 3. Вот теперь вставляем НОВЫЙ объект
+            // add new odject in context
             context.insert(newCalculation)
             
             do {
                 try context.save()
             } catch {
-                print("Ошибка сохранения: \(error.localizedDescription)")
+                print("Save error: \(error.localizedDescription)")
             }
-            
-            // 4. Очищаем поля ввода (черновика), если нужно
+
             vmh.hoursStr = ""
             vmh.minutesStr = ""
             vmh.secondsStr = ""

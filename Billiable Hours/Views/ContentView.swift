@@ -10,13 +10,13 @@ import SwiftData
 
 
 struct ContentView: View {
-    
+
     var body: some View {
         TabView {
             Tab("Calculate", systemImage: "numbers.rectangle") {
                 CalculateView()
             }
-            
+
             Tab("Lists", systemImage: "list.star") {
                 NavigationStack {
                     ListsView()

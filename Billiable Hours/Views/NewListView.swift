@@ -26,9 +26,6 @@ struct NewListView: View {
                     Text("Hourly Rate: ")
                     Spacer()
                     Text("\(hourlyRate)")
-//                    TextField("Hourly Rate", text: $hourlyRate)
-//                        .multilineTextAlignment(.trailing)
-//                        .foregroundStyle(.blue)
                 }
 
                 HStack {
@@ -62,6 +59,7 @@ struct NewListView: View {
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Save") {
+                    // create a snapshot of each calculation
                     let simpleItems = calculations.map {
                         ArchivedCalculation(
                             resultDigit: $0.resultDigit,
@@ -70,13 +68,11 @@ struct NewListView: View {
                         )
                     }
 
-                    // 2. Создаем архивный список с этими данными
+                    // create archive list with a structure instead link on class
                     let newList = HoursList(name: newHoursListName, sumHours: sumHours, sumDurations: sumDurations, hourlyRate: hourlyRate, listResults: simpleItems, date: .now)
                     context.insert(newList)
 
-                    // 3. Теперь удаляем оригиналы.
-                    // Поскольку в newList лежат простые структуры, а не ссылки на классы,
-                    // удаление calculations их никак не заденет!
+                    // delete originals from the working queue
                     for original in calculations {
                         context.delete(original)
                     }
@@ -85,7 +81,7 @@ struct NewListView: View {
                         try context.save()
                         dismiss()
                     } catch {
-                        print("Ошибка: \(error)")
+                        print("Save error: \(error)")
                     }
                 }
             }
@@ -104,11 +100,11 @@ struct NewListView: View {
     private var sumDurations: String {
         let sumResultDigit = calculations.reduce(0) { $0 + $1.resultDigit }
 
-            let h = Int(sumResultDigit)
-            let m = Int((sumResultDigit * 60).truncatingRemainder(dividingBy: 60))
-            let s = Int((sumResultDigit * 3600).truncatingRemainder(dividingBy: 60))
+        let h = Int(sumResultDigit)
+        let m = Int((sumResultDigit * 60).truncatingRemainder(dividingBy: 60))
+        let s = Int((sumResultDigit * 3600).truncatingRemainder(dividingBy: 60))
 
-            return String(format: "%d:%02d:%02d", h, m, s)
+        return String(format: "%d:%02d:%02d", h, m, s)
     }
 }
 

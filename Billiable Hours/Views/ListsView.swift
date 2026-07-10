@@ -11,7 +11,7 @@ import SwiftData
 struct ListsView: View {
     @Environment(\.modelContext) private var context
     @Query(sort: \HoursList.date) var hoursList: [HoursList]
-
+    
     var body: some View {
         if hoursList.isEmpty {
             ContentUnavailableView("Saved Lists", systemImage: "list.star")
@@ -27,7 +27,7 @@ struct ListsView: View {
             .contentMargins(.top, 8)
         }
     }
-
+    
     private func deleteList(indexes: IndexSet) {
         for index in indexes {
             let listToDelete = hoursList[index]

@@ -13,7 +13,7 @@ struct ListDetail: View {
     let calculations: HoursList
     @State private var showCopied = false
     @State var selectedMode: ViewMode = .hours
-
+    
     var body: some View {
         VStack {
             Picker("Mode", selection: $selectedMode) {
@@ -23,13 +23,13 @@ struct ListDetail: View {
             .pickerStyle(.segmented)
             .padding(.horizontal)
             .padding(.top, 16)
-
+            
             if selectedMode == .hours {
-
+                
                 calculatedHoursList
-
+                
             } else {
-
+                
                 calculatedEarningsList
             }
         }
@@ -41,14 +41,14 @@ struct ListDetail: View {
                 ShareLink(item: csvURL())
             }
         }
-        .overlay(alignment: .top) {   // ✅ overlay НА List/контейнер, не внутри Button
+        .overlay(alignment: .top) {  
             if showCopied {
                 copiedBadge
             }
         }
         .animation(.easeInOut, value: showCopied)
     }
-
+    
     private var calculatedHoursList: some View {
         VStack {
             Form {
@@ -59,7 +59,7 @@ struct ListDetail: View {
                     CopyButton(result: calculations.sumHours, showCopied: $showCopied)
                 }
                 .foregroundStyle(.primary)
-
+                
                 ForEach(calculations.listResults) { row in
                     HStack {
                         HStack {
@@ -67,9 +67,9 @@ struct ListDetail: View {
                             Text("\(row.resultString)")
                         }
                         .foregroundStyle(.secondary)
-
+                        
                         Spacer()
-
+                        
                         HStack {
                             Image(systemName: "h.circle")
                             Text("\(row.resultDigit, specifier: "%.3f")")
@@ -81,7 +81,7 @@ struct ListDetail: View {
             }
         }
     }
-
+    
     private var calculatedEarningsList: some View {
         Form {
             HStack {
@@ -89,7 +89,7 @@ struct ListDetail: View {
                 Spacer()
                 Text("\(calculations.hourlyRate)")
             }
-
+            
             ForEach(calculations.listResults) { row in
                 HStack {
                     HStack {
@@ -97,12 +97,12 @@ struct ListDetail: View {
                         Text("\(row.resultDigit, specifier: "%.3f")")
                     }
                     .foregroundStyle(.secondary)
-
+                    
                     Spacer()
-
+                    
                     HStack {
                         Image(systemName: "dollarsign.circle")
-
+                        
                         if let rate = Double(calculations.hourlyRate) {
                             Text("\(row.resultDigit * rate, specifier: "%.3f")")
                         } else {
@@ -114,7 +114,7 @@ struct ListDetail: View {
             }
         }
     }
-
+    
     private var copiedBadge: some View {
         Text("Copied")
             .font(.subheadline)
@@ -125,7 +125,7 @@ struct ListDetail: View {
             .padding(.top, 12)
             .transition(.move(edge: .top).combined(with: .opacity))
     }
-
+    
     func exportCSV() -> String {
         let rate = Double(calculations.hourlyRate) ?? 0
         var csv = "Duration;Hours;Earnings\n"
@@ -135,7 +135,7 @@ struct ListDetail: View {
         }
         return csv
     }
-
+    
     func csvURL() -> URL {
         let csv = exportCSV()
         let url = FileManager.default.temporaryDirectory

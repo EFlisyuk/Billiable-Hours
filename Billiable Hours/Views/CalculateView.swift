@@ -10,19 +10,16 @@ import SwiftData
 
 struct CalculateView: View {
     @State private var vmh = HoursFieldsModel()
-    
+
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
                 VStack(spacing: 0) {
                     InputHoursFields(vmh: vmh)
                         .frame(height: 100)
-                        .scrollDisabled(true) // 1. Запрещаем форме скроллиться внутри себя
-                        
-                    //                            .fixedSize(horizontal: false, vertical: true) // 2. Магия! Говорит форме: "Займи по вертикали только свой идеальный размер"
-                   
-                    CalcHoursFields()
+                        .scrollDisabled(true)
 
+                    CalcHoursFields()
                 }
             }
             .navigationTitle("Worked Time")

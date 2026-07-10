@@ -10,12 +10,6 @@ import Testing
 
 struct Billiable_HoursTests {
 
-    @Test func example() async throws {
-        // Write your test here and use APIs like `#expect(...)` to check expected conditions.
-        // Swift Testing Documentation
-        // https://developer.apple.com/documentation/testing
-    }
-
     @Test func calculate() {
         let model = HoursFieldsModel()
         #expect(model.calculateHours("0", "30", "0") == 0.5)
@@ -30,6 +24,4 @@ struct Billiable_HoursTests {
         #expect(testCalculation.isValidHours("1000") == false)
         #expect(testCalculation.isValidHours("999") == true)
     }
-
-
 }
