@@ -86,8 +86,11 @@ struct ListDetail: View {
         Form {
             HStack {
                 Text("Hourly rate")
-                Spacer()
                 Text("\(calculations.hourlyRate)")
+                Spacer()
+                if let rate = Double(calculations.hourlyRate) {
+                        Text("\(calculations.sumHours * rate, specifier: "%.2f")")
+                    }
             }
             
             ForEach(calculations.listResults) { row in
@@ -96,8 +99,8 @@ struct ListDetail: View {
                         Image(systemName: "h.circle")
                         Text("\(row.resultDigit, specifier: "%.3f")")
                     }
-                    .foregroundStyle(.secondary)
-                    
+                    .foregroundStyle(.green)
+
                     Spacer()
                     
                     HStack {
@@ -109,7 +112,7 @@ struct ListDetail: View {
                             Text("")
                         }
                     }
-                    .foregroundStyle(.green)
+                    .foregroundStyle(.secondary)
                 }
             }
         }
@@ -128,10 +131,10 @@ struct ListDetail: View {
     
     func exportCSV() -> String {
         let rate = Double(calculations.hourlyRate) ?? 0
-        var csv = "Duration;Hours;Earnings\n"
+        var csv = "Duration;Hours;Earnings;Hourly Rate\n"
         for row in calculations.listResults {
             let earnings = rate > 0 ? String(format: "%.2f", locale: Locale.current, row.resultDigit * rate) : ""
-            csv += "\(row.resultString);\(String(format: "%.3f", locale: Locale.current, row.resultDigit));\(earnings)\n"
+            csv += "\(row.resultString);\(String(format: "%.3f", locale: Locale.current, row.resultDigit));\(earnings);\(rate)\n"
         }
         return csv
     }
@@ -145,3 +148,9 @@ struct ListDetail: View {
     }
 }
 
+#Preview("Test Data") {
+    let container = previewContainer()
+    let list = try! container.mainContext.fetch(FetchDescriptor<HoursList>()).first!
+    return ListDetail(calculations: list)
+        .modelContainer(container)
+}
