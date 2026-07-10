@@ -47,7 +47,6 @@ struct ListDetail: View {
             }
         }
         .animation(.easeInOut, value: showCopied)
-
     }
 
     private var calculatedHoursList: some View {
@@ -116,7 +115,6 @@ struct ListDetail: View {
         }
     }
 
-
     private var copiedBadge: some View {
         Text("Copied")
             .font(.subheadline)
@@ -128,13 +126,6 @@ struct ListDetail: View {
             .transition(.move(edge: .top).combined(with: .opacity))
     }
 
-//    func exportCSV() -> String {
-//        var csv = "Duration;Hours\n"
-//        for row in calculations.listResults {
-//            csv += "\(row.resultString);\(String(format: "%.3f", locale: Locale.current, row.resultDigit)))\n"
-//        }
-//        return csv
-//    }
     func exportCSV() -> String {
         let rate = Double(calculations.hourlyRate) ?? 0
         var csv = "Duration;Hours;Earnings\n"

@@ -21,10 +21,17 @@ struct ListsView: View {
                 ForEach(hoursList) { row in
                     NavigationLink("\(row.name)", destination: ListDetail(calculations: row))
                 }
-
+                .onDelete(perform: deleteList(indexes:))
             }
             .navigationTitle("Lists")
             .contentMargins(.top, 8)
+        }
+    }
+
+    private func deleteList(indexes: IndexSet) {
+        for index in indexes {
+            let listToDelete = hoursList[index]
+            context.delete(listToDelete)
         }
     }
 }

@@ -36,3 +36,8 @@ struct ContentView: View {
         .modelContainer(for: [HoursFieldsModel.self, HoursList.self], inMemory: true)
         .preferredColorScheme(.dark)
 }
+
+#Preview("Test Data") {
+    ContentView()
+        .modelContainer(previewContainer())
+}
