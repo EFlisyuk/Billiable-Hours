@@ -10,6 +10,7 @@ import SwiftData
 
 @main
 struct Billiable_HoursApp: App {
+
     var body: some Scene {
         WindowGroup {
             ContentView()
