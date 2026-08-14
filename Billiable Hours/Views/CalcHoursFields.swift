@@ -15,7 +15,7 @@ struct CalcHoursFields: View {
     @State private var showModal = false
     @State var selectedMode: ViewMode = .hours
     @State private var hourlyRate: String = ""
-
+    
     var body: some View {
         VStack {
             if calculations.isEmpty {
@@ -31,24 +31,27 @@ struct CalcHoursFields: View {
                     .pickerStyle(.segmented)
                     .padding(.horizontal)
                     .padding(.top, 16)
-
+                    
                     if selectedMode == .hours {
-
+                        
                         calculatedHoursList
-
+                        
                     } else {
-
+                        
                         calculatedEarningsList
                     }
                 }
                 .background(Color(.systemGroupedBackground))
             }
         }
-
+        .onTapGesture {
+            hideKeyboard()
+        }
+        
         buttonsListControl
-
+        
     }
-
+    
     private var calculatedHoursList: some View {
         List {
             HStack {
@@ -58,7 +61,7 @@ struct CalcHoursFields: View {
                 CopyButton(result: sumHours, showCopied: $showCopied)
             }
             .foregroundStyle(.primary)
-
+            
             ForEach(calculations) { result in
                 HStack {
                     HStack {
@@ -66,9 +69,9 @@ struct CalcHoursFields: View {
                         Text("\(result.resultString)")
                     }
                     .foregroundStyle(.secondary)
-
+                    
                     Spacer()
-
+                    
                     HStack {
                         Image(systemName: "h.circle")
                         Text("\(result.resultDigit, specifier: "%.3f")")
@@ -86,9 +89,9 @@ struct CalcHoursFields: View {
         }
         .animation(.easeInOut, value: showCopied)
     }
-
+    
     private var calculatedEarningsList: some View {
-
+        
         List {
             HStack {
                 Text("Hourly Rate")
@@ -97,8 +100,11 @@ struct CalcHoursFields: View {
                     .multilineTextAlignment(.trailing)
                     .padding(.trailing)
                     .foregroundStyle(.blue)
+#if os(iOS)
+                    .keyboardType(UIDevice.current.userInterfaceIdiom == .pad ? .numbersAndPunctuation : .numberPad)
+#endif
             }
-
+            
             ForEach(calculations) { result in
                 HStack {
                     HStack {
@@ -106,9 +112,9 @@ struct CalcHoursFields: View {
                         Text("\(result.resultDigit, specifier: "%.3f")")
                     }
                     .foregroundStyle(.green)
-
+                    
                     Spacer()
-
+                    
                     HStack {
                         Image(systemName: "dollarsign.circle")
                         if let rate = Double(hourlyRate) {
@@ -122,9 +128,9 @@ struct CalcHoursFields: View {
             .onDelete(perform: deleteCalc(indexes:))
         }
     }
-
+    
     private var buttonsListControl: some View {
-
+        
         HStack (spacing: 16) {
             Button(role: .destructive) {
                 for row in calculations {
@@ -143,7 +149,7 @@ struct CalcHoursFields: View {
                     .contentShape(Rectangle())
             }
             .buttonsListControlStyle(isEmpty: calculations.isEmpty , color: .red)
-
+            
             Button {
                 showModal = true
             } label: {
@@ -163,14 +169,14 @@ struct CalcHoursFields: View {
             }
         }
     }
-
+    
     func deleteCalc(indexes: IndexSet) {
         for index in indexes {
             let calcToDelete = calculations[index]
             context.delete(calcToDelete)
         }
     }
-
+    
     private var copiedBadge: some View {
         Text("Copied")
             .font(.subheadline)
@@ -181,18 +187,18 @@ struct CalcHoursFields: View {
             .padding(.top, 12)
             .transition(.move(edge: .top).combined(with: .opacity))
     }
-
+    
     private var sumHours: Double {
         calculations.reduce(0) {$0 + $1.resultDigit}
     }
-
+    
     private var sumDurations: String {
         let sumResultDigit = calculations.reduce(0) { $0 + $1.resultDigit }
-
+        
         let h = Int(sumResultDigit)
         let m = Int((sumResultDigit * 60).truncatingRemainder(dividingBy: 60))
         let s = Int((sumResultDigit * 3600).truncatingRemainder(dividingBy: 60))
-
+        
         return String(format: "%d:%02d:%02d", h, m, s)
     }
 }

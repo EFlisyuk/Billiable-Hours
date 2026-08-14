@@ -13,7 +13,7 @@ struct NewListView: View {
     @Environment(\.dismiss) private var dismiss
 
     @Query(sort: \HoursFieldsModel.date) var calculations: [HoursFieldsModel]
-    @State private var newHoursListName: String = "New List Name"
+    @State private var newHoursListName: String = ""
     var hourlyRate: String
 
     var body: some View {
@@ -69,7 +69,8 @@ struct NewListView: View {
                     }
 
                     // create archive list with a structure instead link on class
-                    let newList = HoursList(name: newHoursListName, sumHours: sumHours, sumDurations: sumDurations, hourlyRate: hourlyRate, listResults: simpleItems, date: .now)
+                    let finalName = newHoursListName.isEmpty ? defaultListName : newHoursListName
+                    let newList = HoursList(name: finalName, sumHours: sumHours, sumDurations: sumDurations, hourlyRate: hourlyRate, listResults: simpleItems, date: .now)
                     context.insert(newList)
 
                     // delete originals from the working queue
@@ -105,6 +106,12 @@ struct NewListView: View {
         let s = Int((sumResultDigit * 3600).truncatingRemainder(dividingBy: 60))
 
         return String(format: "%d:%02d:%02d", h, m, s)
+    }
+
+    private var defaultListName: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd.MM.yyyy HH:mm"
+        return formatter.string(from: .now)
     }
 }
 

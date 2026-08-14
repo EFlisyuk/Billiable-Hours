@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct NumberFieldBaseStyle: ViewModifier {
     func body(content: Content) -> some View {
@@ -17,7 +18,10 @@ struct NumberFieldBaseStyle: ViewModifier {
                 RoundedRectangle(cornerRadius: 8)
                     .fill(Color(.secondarySystemGroupedBackground))
             )
-            .keyboardType(.numberPad)
+        //            .keyboardType(.numberPad)
+            #if os(iOS)
+            .keyboardType(UIDevice.current.userInterfaceIdiom == .pad ? .numbersAndPunctuation : .numberPad)
+            #endif
     }
 }
 

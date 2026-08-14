@@ -15,6 +15,7 @@ struct CalcButton: View {
     var body: some View {
         Button("Calc", systemImage: "arrow.right")
         {
+            hideKeyboard() 
             // create new object
             let newCalculation = HoursFieldsModel(
                 hoursStr: vmh.hoursStr,
