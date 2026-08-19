@@ -44,11 +44,11 @@ struct CalcButton: View {
         .buttonStyle(.borderless)
         .disabled(!vmh.isValid)
         .opacity(vmh.isValid ? 1 : 0.35)
-        .padding(.vertical, 8)
+        .padding(.vertical, 12)
         .padding(.horizontal, 28)
         .background(.blue)
         .foregroundColor(.white)
-        .cornerRadius(12)
+        .cornerRadius(16)
     }
 }
 
