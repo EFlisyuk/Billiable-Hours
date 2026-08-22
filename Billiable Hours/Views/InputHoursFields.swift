@@ -50,6 +50,9 @@ struct InputHoursFields: View {
                 }
                 .listRowInsets(EdgeInsets())
             }
+            .onTapGesture {
+                hideKeyboard()
+            }
         }
     }
 }

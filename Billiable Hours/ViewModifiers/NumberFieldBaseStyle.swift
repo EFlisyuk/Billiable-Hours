@@ -6,18 +6,22 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct NumberFieldBaseStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
             .multilineTextAlignment(.center)
-            .padding(.vertical, 4)
+            .padding(.vertical, 8)
             .padding(.horizontal, 4)
             .background(
-                RoundedRectangle(cornerRadius: 8)
+                RoundedRectangle(cornerRadius: 16)
                     .fill(Color(.secondarySystemGroupedBackground))
             )
-            .keyboardType(.numberPad)
+        //            .keyboardType(.numberPad)
+            #if os(iOS)
+            .keyboardType(UIDevice.current.userInterfaceIdiom == .pad ? .numbersAndPunctuation : .numberPad)
+            #endif
     }
 }
 
